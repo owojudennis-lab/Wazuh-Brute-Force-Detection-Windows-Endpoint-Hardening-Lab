@@ -1,134 +1,253 @@
-# Wazuh Brute Force Detection & Windows Endpoint Hardening Lab
+# Windows Endpoint Hardening & Brute Force Detection Engineering Lab
 
 ## Overview
 
-This lab demonstrates how to:
+This lab focused on hardening a Windows endpoint against brute-force authentication attacks while monitoring all security activity using Wazuh SIEM.
 
-- Deploy and configure Wazuh for Windows security monitoring
-- Detect brute force login attempts using custom Wazuh rules
-- Simulate failed authentication attacks from Kali Linux
-- Configure Windows endpoint hardening policies
-- Validate security alerts and audit events inside Wazuh
-- Map detections to MITRE ATT&CK techniques
+The environment simulated a realistic blue-team workflow involving:
+
+- Windows endpoint hardening
+- Authentication monitoring
+- Brute-force attack simulation
+- Detection engineering
+- CIS benchmark monitoring
+- Account lockout validation
+- Security event analysis
+
+The project demonstrates both:
+- defensive security controls
+- SOC detection capabilities
 
 ---
 
-# Lab Architecture
+# Lab Environment
 
-| System | Role | IP Address |
-|---|---|---|
-| Wazuh Server | SIEM / Detection Platform | 192.168.56.105 |
-| Windows 10 VM | Target Endpoint | 192.168.56.107 |
-| Kali Linux | Attacker Machine | Host-Only Network |
+| System | Role |
+|---|---|
+| Ubuntu Server | Wazuh Manager |
+| Windows 10 VM | Target Endpoint |
+| Kali Linux | Attacker Machine |
+| Active Directory | Centralized Authentication |
 
 ---
 
 # Objectives
 
-- Configure Windows event monitoring with Wazuh
-- Generate failed authentication events
-- Create a custom brute-force detection rule
-- Simulate attack activity from Kali Linux
-- Harden Windows security policies
-- Analyze alerts inside the Wazuh dashboard
+- Harden Windows authentication security
+- Simulate brute-force login attacks
+- Create custom Wazuh detection logic
+- Monitor security events centrally
+- Validate account lockout enforcement
+- Analyze security telemetry inside Wazuh
 
 ---
 
-# Tools & Technologies
+# Technologies Used
 
-- Wazuh
+- Wazuh SIEM
 - Windows 10
 - Kali Linux
 - VirtualBox
 - RDP / xfreerdp
-- Windows Group Policy Editor
+- Windows Defender
+- Windows Firewall
+- Group Policy Editor
 - MITRE ATT&CK Framework
 
 ---
 
-# MITRE ATT&CK Mapping
+# Attack Scenario
 
-| Technique | Description |
-|---|---|
-| T1110 | Brute Force |
-| T1078 | Valid Accounts |
-| T1531 | Account Access Removal |
-| T1070 | Indicator Removal (potential defensive logging scenarios) |
+A brute-force authentication attack was simulated from Kali Linux against a Windows 10 endpoint using repeated failed RDP authentication attempts.
+
+Wazuh monitored the endpoint and generated:
+- authentication alerts
+- brute-force correlation alerts
+- CIS benchmark compliance alerts
+- account lockout activity
 
 ---
 
-# Step 1 — Verify Wazuh Agent Connectivity
+# Step 1 — Windows Account Policy Configuration
 
-Verified that the Windows endpoint was successfully connected to the Wazuh manager.
+Windows account policies were configured to improve authentication security and reduce brute-force attack effectiveness.
+
+## Configured Policies
+
+| Policy | Value |
+|---|---|
+| Account Lockout Threshold | 5 Invalid Attempts |
+| Account Lockout Duration | 15 Minutes |
+| Reset Lockout Counter | 15 Minutes |
+
+---
+
+## Screenshot
+
+### `account-policy-config.png`
+
+Add screenshot showing:
+- account lockout threshold
+- lockout duration
+- reset counter values
+
+---
+
+# Step 2 — Audit Policy Configuration
+
+Windows audit policies were configured to ensure authentication events were logged and forwarded to Wazuh.
+
+## Enabled Policies
+
+- Audit Logon Events
+- Audit Account Logon Events
+- Failure Auditing
+- Success Auditing
+
+These policies allowed:
+- failed logins
+- account lockouts
+- authentication attempts
+
+to appear inside Wazuh.
+
+---
+
+## Screenshot
+
+### `audit-policy-config.png`
+
+Add screenshot showing:
+- enabled audit policies
+
+---
+
+# Step 3 — Windows Defender Verification
+
+Windows Defender real-time protection was verified to ensure endpoint protection was active during testing.
 
 ## Validation
 
-- Wazuh dashboard showed the Windows agent as active
-- Security events were being collected successfully
+- Real-time protection enabled
+- Threat protection active
+- Endpoint security operational
 
 ---
 
----
-<img src="Policy detected.png">
----
+## Screenshot
 
-# Step 2 — Generate Failed Login Events
+### `defender-active.png`
 
-Failed login attempts were generated against the Windows 10 endpoint to create authentication failure logs.
-
-## Attack Simulation
-
-From Kali Linux:
-
-```bash
-xfreerdp /u:Administrator /p:wrongpass /v:192.168.56.107 +auth-only
-```
-
-Multiple failed attempts were generated using:
-
-```bash
-for i in {1..10}; do xfreerdp /u:Administrator /p:wrongpass /v:192.168.56.107 +auth-only; done
-```
+Add screenshot showing:
+- Windows Defender active
+- real-time protection enabled
 
 ---
 
-## Screenshot Placeholders
+# Step 4 — Windows Firewall Configuration
 
-### Screenshot 2
-**Kali Linux terminal showing brute-force simulation command**
+Windows Firewall protections were reviewed and verified.
 
-### Screenshot 3
-**Failed authentication output from xfreerdp**
+## Firewall Profiles Enabled
 
----
-
-# Step 3 — Observe Native Wazuh Authentication Alerts
-
-Wazuh successfully detected failed Windows logon attempts.
-
-## Observed Alerts
-
-| Rule ID | Description |
+| Profile | Status |
 |---|---|
-| 60122 | Logon failure — Unknown user or bad password |
-| 60104 | Windows audit failure event |
+| Domain Profile | Enabled |
+| Private Profile | Enabled |
 
-These alerts confirmed that Windows authentication events were reaching the SIEM correctly.
-
----
-
-## Screenshot Placeholder
-
-### Screenshot 4
-**Wazuh security events showing failed login alerts**
+Firewall protections were maintained while allowing controlled RDP testing within the lab environment.
 
 ---
 
-# Step 4 — Create Custom Brute Force Detection Rule
+## Screenshot
 
-A custom Wazuh rule was created to detect repeated failed login attempts.
+### `firewall-config.png`
 
-## Custom Rule
+Add screenshot showing:
+- Windows Firewall enabled
+- active profiles
+
+---
+
+# Step 5 — Network Level Authentication (NLA)
+
+RDP security was hardened using Network Level Authentication (NLA).
+
+## Security Benefit
+
+NLA requires authentication before a remote session is fully established, reducing exposure to unauthorized access attempts.
+
+---
+
+## Screenshot
+
+### `nla-enabled.png`
+
+Add screenshot showing:
+- "Allow connections only from computers running Remote Desktop with Network Level Authentication"
+
+---
+
+# Step 6 — Password Policy Hardening
+
+Password policies were configured to improve credential security.
+
+## Configured Policies
+
+| Policy | Value |
+|---|---|
+| Minimum Password Length | 14 Characters |
+| Password Complexity | Enabled |
+| Maximum Password Age | 30 Days |
+
+---
+
+## Screenshot
+
+### `password-policy-config.png`
+
+Add screenshot showing:
+- password complexity enabled
+- minimum password length
+- password age settings
+
+---
+
+# Step 7 — Kali Linux Attack Configuration
+
+Kali Linux was configured as the attacker system.
+
+## Attack Method
+
+Repeated failed RDP authentication attempts were generated using:
+
+```bash
+xfreerdp /u:testuser /p:WrongPassword123 /v:192.168.56.107 +auth-only
+```
+
+Multiple authentication failures were generated to trigger:
+- Windows security events
+- Wazuh correlation rules
+- account lockout protections
+
+---
+
+## Screenshot
+
+### `kali-config.png`
+
+Add screenshot showing:
+- Kali terminal
+- xfreerdp attack command
+- failed authentication attempts
+
+---
+
+# Step 8 — Custom Wazuh Detection Rule
+
+A custom Wazuh correlation rule was created to detect repeated failed login attempts.
+
+## Rule Configuration
 
 File:
 
@@ -152,213 +271,160 @@ Rule:
 
 ---
 
-## Rule Logic
+# Detection Logic
 
-- Trigger after 5 failed login attempts
-- Timeframe: 60 seconds
-- Based on parent rule SID 60122
-- Severity level increased to 10
-
----
-
-## Screenshot Placeholder
-
-### Screenshot 5
-**Custom rule inside local_rules.xml**
+The rule:
+- monitored Windows failed login events
+- triggered after 5 failures
+- correlated events within 60 seconds
+- escalated severity to level 10
 
 ---
 
-# Step 5 — Restart Wazuh Manager
+# Step 9 — Wazuh Alert Detection
 
-After adding the custom rule, the Wazuh manager was restarted.
+Wazuh successfully detected:
+- failed login attempts
+- authentication failures
+- brute-force behavior
+- CIS hardening compliance changes
 
-## Commands
+## Observed Rule IDs
 
-```bash
-sudo systemctl restart wazuh-manager
-```
-
-Validation:
-
-```bash
-sudo systemctl status wazuh-manager
-```
-
----
-
-## Screenshot Placeholder
-
-### Screenshot 6
-**Successful Wazuh manager restart**
-
----
-
-# Step 6 — Trigger Custom Brute Force Detection
-
-The brute-force simulation was executed again after enabling the custom rule.
-
-Wazuh successfully correlated repeated failed logins into a higher-severity brute-force alert.
-
-## Generated Alert
-
-| Rule ID | Description |
+| Rule ID | Purpose |
 |---|---|
-| 100001 | Multiple failed login attempts detected (possible brute force) |
+| 60122 | Failed Windows login |
+| 60104 | Windows audit failure |
+| 100001 | Custom brute-force detection |
+| 19009 | CIS benchmark monitoring |
+| 19013 | Password policy monitoring |
 
 ---
 
-## Screenshot Placeholder
+## Screenshot
 
-### Screenshot 7
-**Custom brute-force detection alert inside Wazuh**
+### `policy-detected-on-wazuh.png`
+
+Add screenshot showing:
+- rule 100001
+- failed login alerts
+- CIS benchmark alerts
+- MITRE ATT&CK mappings
 
 ---
 
-# Step 7 — Windows Endpoint Hardening
+# Step 10 — Account Lockout Validation
 
-Windows security policies were hardened using Local Group Policy Editor.
+Repeated failed authentication attempts eventually triggered Windows account lockout protections.
 
-## Security Policies Configured
+The lockout impacted the shared domain account across the Active Directory environment, demonstrating centralized authentication enforcement.
 
-### Password Policy
+## Security Impact
 
-Path:
+This validated that:
+- account lockout policies were functioning
+- brute-force attempts were mitigated
+- Windows authentication protections were active
 
-```text
-Computer Configuration
-→ Windows Settings
-→ Security Settings
-→ Account Policies
-→ Password Policy
-```
+---
 
-Configured:
+## Screenshot
 
-| Setting | Value |
+### `user-locked-out.png`
+
+Add screenshot showing:
+- locked account message
+OR
+- failed login due to account lockout
+OR
+- relevant Wazuh lockout alerts
+
+---
+
+# MITRE ATT&CK Mapping
+
+| Technique | Description |
 |---|---|
-| Minimum Password Length | 14 |
-| Password Complexity | Enabled |
-| Maximum Password Age | 30 Days |
+| T1110 | Brute Force |
+| T1078 | Valid Accounts |
+| T1531 | Account Access Removal |
 
 ---
 
-### Account Lockout Policy
+# Key Learnings
 
-Path:
-
-```text
-Account Policies
-→ Account Lockout Policy
-```
-
-Configured:
-
-| Setting | Value |
-|---|---|
-| Account Lockout Threshold | 5 invalid attempts |
-| Lockout Duration | 15 minutes |
-| Reset Counter After | 15 minutes |
-
----
-
-## Screenshot Placeholders
-
-### Screenshot 8
-**Password policy configuration**
-
-### Screenshot 9
-**Account lockout policy configuration**
-
----
-
-# Step 8 — Validate Hardening Events in Wazuh
-
-Wazuh generated CIS benchmark and hardening-related alerts after policy modifications.
-
-## Observed Alerts
-
-| Rule ID | Description |
-|---|---|
-| 19013 | Minimum password length configured |
-| 19015 | Guest account disabled |
-| 19009 | Anonymous SID translation disabled |
-
-These alerts confirmed that Wazuh Security Configuration Assessment (SCA) was functioning properly.
-
----
-
-## Screenshot Placeholder
-
-### Screenshot 10
-**Wazuh CIS benchmark compliance alerts**
-
----
-
-# Findings
-
-- Wazuh successfully detected failed authentication attempts
-- Custom correlation rules improved brute-force visibility
-- Windows hardening policies generated compliance events
-- MITRE ATT&CK mappings were automatically applied
-- Endpoint telemetry was successfully centralized into the SIEM
+- Wazuh can correlate repeated authentication failures into high-confidence brute-force alerts.
+- Windows audit policies are essential for SIEM visibility.
+- Account lockout policies help mitigate password guessing attacks.
+- Network Level Authentication reduces RDP exposure.
+- Wazuh SCA can monitor endpoint hardening compliance.
+- Active Directory authentication can impact multiple systems simultaneously.
 
 ---
 
 # Challenges Encountered
 
-## Rule Mapping Issue
+## Domain Policy Restrictions
 
-Attempted IP-based field mapping using:
+Some local security policies were restricted due to Active Directory domain inheritance.
+
+### Resolution
+
+Security settings were verified using:
+- command-line policy validation
+- Wazuh SCA alerts
+- Windows security event analysis
+
+---
+
+## Field Mapping Issue
+
+An attempt to map:
 
 ```xml
 <field name="win.eventdata.ipAddress">
 ```
 
-The rule initially failed due to field mapping inconsistencies.
+caused rule detection inconsistencies.
 
 ### Resolution
 
-The rule was simplified to use only:
+The rule was simplified to use:
 
 ```xml
 <if_matched_sid>60122</if_matched_sid>
 ```
 
-This restored successful alert generation.
-
----
-
-# Key Lessons Learned
-
-- Correlation rules improve SIEM detection quality
-- Windows Event IDs are critical for authentication monitoring
-- Wazuh custom rules require careful field mapping validation
-- Endpoint hardening can be validated through Wazuh SCA alerts
-- Brute-force detection can be simulated safely in a lab environment
+which restored successful correlation behavior.
 
 ---
 
 # Future Improvements
 
-- Integrate Suricata IDS with Wazuh
-- Add active response for automatic IP blocking
-- Forward logs into a dedicated SOC dashboard
-- Configure email alerting
+- Configure Wazuh Active Response
+- Automatically block malicious IP addresses
+- Integrate Suricata IDS
 - Add Sysmon telemetry
-- Simulate lateral movement scenarios
+- Build custom SOC dashboards
+- Add Sigma detection rules
 
 ---
 
 # Conclusion
 
-This lab demonstrated a complete workflow for:
+This lab demonstrated a full blue-team workflow involving:
 
-- Windows security monitoring
-- Brute-force attack detection
-- SIEM rule customization
-- Endpoint hardening
-- Security event analysis using Wazuh
+- Windows endpoint hardening
+- Brute-force attack simulation
+- Detection engineering
+- Security monitoring
+- Account lockout enforcement
+- Wazuh SIEM analysis
 
-The environment successfully simulated real-world SOC monitoring and defensive detection engineering workflows.
+The project successfully combined:
+- prevention
+- detection
+- monitoring
+- and validation
 
----
+within a realistic enterprise-style Active Directory lab environment.
