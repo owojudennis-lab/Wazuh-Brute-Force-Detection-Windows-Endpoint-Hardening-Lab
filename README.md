@@ -83,7 +83,7 @@ Windows account policies were configured to improve authentication security and 
 ---
 
 
-<img src="account-policy-config.png">
+<img src="Account policy configuration.png">
 
 ---
 
