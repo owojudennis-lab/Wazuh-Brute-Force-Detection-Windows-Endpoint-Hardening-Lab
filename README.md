@@ -68,11 +68,8 @@ Verified that the Windows endpoint was successfully connected to the Wazuh manag
 
 ---
 
-## Screenshot Placeholder
-
-### Screenshot 1
-**Wazuh dashboard showing active Windows agent**
-
+---
+<img src="">
 ---
 
 # Step 2 — Generate Failed Login Events
