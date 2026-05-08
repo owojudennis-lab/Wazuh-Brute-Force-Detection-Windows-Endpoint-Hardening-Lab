@@ -192,15 +192,7 @@ Multiple authentication failures were generated to trigger:
 
 ---
 
-## Screenshot
-
-### `kali-config.png`
-
-Add screenshot showing:
-- Kali terminal
-- xfreerdp attack command
-- failed authentication attempts
-
+<img src="Kali config.png">
 ---
 
 # Step 8 — Custom Wazuh Detection Rule
@@ -261,16 +253,7 @@ Wazuh successfully detected:
 
 ---
 
-## Screenshot
-
-### `policy-detected-on-wazuh.png`
-
-Add screenshot showing:
-- rule 100001
-- failed login alerts
-- CIS benchmark alerts
-- MITRE ATT&CK mappings
-
+<img src="Policy detected.png">
 ---
 
 # Step 10 — Account Lockout Validation
@@ -288,17 +271,7 @@ This validated that:
 
 ---
 
-## Screenshot
-
-### `user-locked-out.png`
-
-Add screenshot showing:
-- locked account message
-OR
-- failed login due to account lockout
-OR
-- relevant Wazuh lockout alerts
-
+<img src="User locked out after logged in attempts.png">
 ---
 
 # MITRE ATT&CK Mapping
