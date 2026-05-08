@@ -82,14 +82,8 @@ Windows account policies were configured to improve authentication security and 
 
 ---
 
-## Screenshot
 
-### `account-policy-config.png`
-
-Add screenshot showing:
-- account lockout threshold
-- lockout duration
-- reset counter values
+<img src="account-policy-config.png">
 
 ---
 
@@ -113,13 +107,7 @@ to appear inside Wazuh.
 
 ---
 
-## Screenshot
-
-### `audit-policy-config.png`
-
-Add screenshot showing:
-- enabled audit policies
-
+<img src="Audit policy configuraation.png">
 ---
 
 # Step 3 — Windows Defender Verification
@@ -134,14 +122,7 @@ Windows Defender real-time protection was verified to ensure endpoint protection
 
 ---
 
-## Screenshot
-
-### `defender-active.png`
-
-Add screenshot showing:
-- Windows Defender active
-- real-time protection enabled
-
+<img src="Defender Active.png">
 ---
 
 # Step 4 — Windows Firewall Configuration
@@ -159,14 +140,7 @@ Firewall protections were maintained while allowing controlled RDP testing withi
 
 ---
 
-## Screenshot
-
-### `firewall-config.png`
-
-Add screenshot showing:
-- Windows Firewall enabled
-- active profiles
-
+<img src="Firewall enabled.png">
 ---
 
 # Step 5 — Network Level Authentication (NLA)
@@ -179,13 +153,7 @@ NLA requires authentication before a remote session is fully established, reduci
 
 ---
 
-## Screenshot
-
-### `nla-enabled.png`
-
-Add screenshot showing:
-- "Allow connections only from computers running Remote Desktop with Network Level Authentication"
-
+<img src="NLA allowed.png">
 ---
 
 # Step 6 — Password Policy Hardening
@@ -202,15 +170,7 @@ Password policies were configured to improve credential security.
 
 ---
 
-## Screenshot
-
-### `password-policy-config.png`
-
-Add screenshot showing:
-- password complexity enabled
-- minimum password length
-- password age settings
-
+<img src="Password policy configuration.png">
 ---
 
 # Step 7 — Kali Linux Attack Configuration
