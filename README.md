@@ -69,7 +69,7 @@ Verified that the Windows endpoint was successfully connected to the Wazuh manag
 ---
 
 ---
-<img src="">
+<img src="Policy detected.png">
 ---
 
 # Step 2 — Generate Failed Login Events
